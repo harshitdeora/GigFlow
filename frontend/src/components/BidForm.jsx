@@ -76,3 +76,4 @@ const BidForm = ({ onSubmit, onCancel }) => {
 export default BidForm
 
 
+
