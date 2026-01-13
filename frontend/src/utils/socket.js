@@ -1,6 +1,9 @@
 import { io } from 'socket.io-client'
 
-export const socket = io('http://localhost:5000', {
+// Use environment variable for API URL, fallback to localhost for development
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
+export const socket = io(API_URL, {
   autoConnect: false,
   withCredentials: true,
   transports: ['websocket', 'polling']

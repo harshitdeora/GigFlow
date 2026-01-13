@@ -9,6 +9,7 @@ yarn.lock
 .env.development.local
 .env.test.local
 .env.production.local
+backend/.env
 
 # Build outputs
 dist/
@@ -32,4 +33,7 @@ frontend/.vite/
 
 # Backend
 backend/node_modules/
+
+# Render
+.render/
 

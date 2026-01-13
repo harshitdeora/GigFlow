@@ -182,13 +182,35 @@ The hiring process uses MongoDB transactions to ensure atomicity:
 
 ## Production Deployment
 
-Before deploying to production:
+### Deploying to Render.com
+
+See [RENDER_DEPLOYMENT.md](./RENDER_DEPLOYMENT.md) for detailed deployment instructions.
+
+Quick steps:
+1. Set up MongoDB Atlas (free tier available)
+2. Deploy backend as a Web Service on Render
+3. Deploy frontend as a Static Site on Render
+4. Configure environment variables in Render dashboard
+
+### Environment Variables for Production
+
+**Backend:**
+- `NODE_ENV=production`
+- `PORT=10000` (or let Render assign)
+- `MONGODB_URI=your_mongodb_atlas_connection_string`
+- `JWT_SECRET=strong_random_string`
+- `CLIENT_URL=your_frontend_url`
+
+**Frontend:**
+- `VITE_API_URL=your_backend_url`
+
+### Before Deploying:
 1. Update `JWT_SECRET` to a strong, random value
 2. Set `NODE_ENV=production`
 3. Update CORS origins to your production domain
 4. Use a production MongoDB instance (MongoDB Atlas)
 5. Configure proper HTTPS for secure cookies
-6. Update `CLIENT_URL` in backend `.env`
+6. Update `CLIENT_URL` in backend environment variables
 
  
 
