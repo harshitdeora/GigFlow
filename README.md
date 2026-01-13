@@ -162,10 +162,6 @@ The hiring process uses MongoDB transactions to ensure atomicity:
 - When a freelancer is hired, they receive an instant notification
 - Notifications appear both in the UI and as browser notifications (if permitted)
 
-### 3. Dark Theme with Glow Effects
-- Custom dark theme with purple/indigo glow effects
-- Smooth animations and transitions
-- Modern, professional UI design
 
 ## Testing the Application
 
