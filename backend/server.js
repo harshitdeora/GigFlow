@@ -22,7 +22,9 @@ const httpServer = createServer(app);
 // Configure CORS origins
 const allowedOrigins = process.env.CLIENT_URL 
   ? process.env.CLIENT_URL.split(',').map(url => url.trim())
-  : ['http://localhost:5173'];
+  : process.env.NODE_ENV === 'production'
+    ? []
+    : ['http://localhost:5173', 'http://127.0.0.1:5173'];
 
 const io = new Server(httpServer, {
   cors: {

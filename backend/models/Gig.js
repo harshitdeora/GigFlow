@@ -32,3 +32,4 @@ const gigSchema = new mongoose.Schema({
 
 export default mongoose.model('Gig', gigSchema);
 
+

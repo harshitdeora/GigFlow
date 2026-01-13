@@ -35,3 +35,4 @@ bidSchema.index({ gigId: 1, freelancerId: 1 }, { unique: true });
 
 export default mongoose.model('Bid', bidSchema);
 
+
