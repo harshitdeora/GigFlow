@@ -5,14 +5,20 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
 import gigRoutes from './routes/gigs.js';
 import bidRoutes from './routes/bids.js';
 
 dotenv.config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const httpServer = createServer(app);
+
 // Configure CORS origins
 const allowedOrigins = process.env.CLIENT_URL 
   ? process.env.CLIENT_URL.split(',').map(url => url.trim())
@@ -33,10 +39,23 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-// Routes
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/gigs', gigRoutes);
 app.use('/api/bids', bidRoutes);
+
+// Serve static files from frontend dist directory (production)
+const frontendDistPath = path.join(__dirname, '../frontend/dist');
+app.use(express.static(frontendDistPath));
+
+// Serve frontend for all non-API routes (SPA fallback)
+app.get('*', (req, res) => {
+  // Don't serve index.html for API routes
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ message: 'API route not found' });
+  }
+  res.sendFile(path.join(frontendDistPath, 'index.html'));
+});
 
 // Socket.io connection handling
 io.on('connection', (socket) => {
@@ -62,7 +81,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/gigflow')
   .catch(err => console.error('MongoDB connection error:', err));
 
 const PORT = process.env.PORT || 10000;
-httpServer.listen(PORT, () => {
+httpServer.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
 

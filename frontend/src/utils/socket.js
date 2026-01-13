@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client'
 
-// Use environment variable for API URL, fallback to localhost for development
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+// Use environment variable for API URL, fallback to same origin (same domain)
+const API_URL = import.meta.env.VITE_API_URL || window.location.origin
 
 export const socket = io(API_URL, {
   autoConnect: false,
